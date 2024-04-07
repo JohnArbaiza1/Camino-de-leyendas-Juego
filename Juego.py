@@ -46,8 +46,12 @@ def bienvenida_animada(mensaje):
 #Funcion encargada del lanzamiento de los dados.
 def lanzar_dados():
     #Definimos las variables que almacenara el valor del lazamiento de los dados
-    dado1 = random.randint(1,6)
-    dado2 = random.randint(1,6)
+    # dado1 = random.randint(1,6)
+    # dado2 = random.randint(1,6)
+
+    # para comprobar que funcione los tiros dobles
+    dado1 = 1
+    dado2 = 1
     return dado1, dado2
 
 #Funcion encargada de dibujar el tablero de juego
@@ -73,6 +77,9 @@ time.sleep(0.6)
 # jugadores = int(input("\t Cuantos novatos jugaran:"))
 jugadores = validar()
 
+# casillas de ejemplo
+casillas_tiro_doble = [1, 2, 3, 4, 6, 7, 8]
+
 #-------------------------------------------------------------------------------------
 #llenado de elementos de la lista posicion y jugadores Activos
 for i in range(jugadores):
@@ -97,6 +104,24 @@ while jugar:
                 print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
                 print(Fore.YELLOW+"Adelante futura leyenda \n"+ Fore.RESET)
                 posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1)
+
+                tiro_doble_consecutivo = 0
+                while posicion_jugador[jugador] in casillas_tiro_doble:
+                    print(f"Tienes tiro doble. Cantidad: {tiro_doble_consecutivo + 1}")
+                    input(f"Es turno del jugador {jugador + 1}. Presione Enter para lanzar los dados")
+                    dado1, dado2 = lanzar_dados()
+                    if dado1 == dado2:
+                        print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
+                        print(Fore.YELLOW+"Adelante futura leyenda \n"+ Fore.RESET)
+                        posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1)
+                        tiro_doble_consecutivo += 1
+                        if tiro_doble_consecutivo == 3:
+                            print(f"Jugador {jugador + 1} Vuelve al inicio")
+                            posicion_jugador[jugador] = 0
+                            tiro_doble_consecutivo = 0
+                    else:
+                        tiro_doble_consecutivo = 0
+
                 print(f"Posicion actual del jugador {jugador + 1}: {posicion_jugador[jugador]}")
                 #validamos si un jugador cae en la misma casilla que otro jugador
                 for indice, elemento in enumerate(posicion_jugador):
