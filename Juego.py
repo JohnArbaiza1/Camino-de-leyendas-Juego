@@ -7,6 +7,7 @@ init()
 from Mover_ficha import *
 from Vidas import Vidas
 from LogicaVidas import Logica
+from validacion_dato import validar
 #-------------------------------------------------------------------------------------
 #Definimos una lista que contenga el mensaje a mostrar
 mensajes = ["    BIENVENIDO","        AL ","CAMINO DE LEYENDAS"]
@@ -69,7 +70,8 @@ def tablero(posicion_jugador,filas,columnas):
 bienvenida_animada(mensaje=mensajes)
 time.sleep(0.6)
 #Preguntamos el numero de jugadores
-jugadores = int(input("\t Cuantos novatos jugaran:"))
+# jugadores = int(input("\t Cuantos novatos jugaran:"))
+jugadores = validar()
 
 #-------------------------------------------------------------------------------------
 #llenado de elementos de la lista posicion y jugadores Activos
@@ -95,6 +97,7 @@ while jugar:
                 print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
                 print(Fore.YELLOW+"Adelante futura leyenda \n"+ Fore.RESET)
                 posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1)
+                print(f"Posicion actual del jugador {jugador + 1}: {posicion_jugador[jugador]}")
                 #validamos si un jugador cae en la misma casilla que otro jugador
                 for indice, elemento in enumerate(posicion_jugador):
                     if indice != jugador and elemento == posicion_jugador[jugador]:
