@@ -5,17 +5,26 @@ from colorama import init, Fore #Para poder dar color a los mensajes en consola
 init()
 #Llamamos a las demas clases
 from Mover_ficha import *
+from Vidas import Vidas
+from LogicaVidas import Logica
 #-------------------------------------------------------------------------------------
 #Definimos una lista que contenga el mensaje a mostrar
 mensajes = ["    BIENVENIDO","        AL ","CAMINO DE LEYENDAS"]
 #Definimos una lista vacia que almacene las posiciones de los jugadores
-posicion_jugador = [0,0]
+posicion_jugador = []
+#lista para controlar los jugadores que siguen en juego
+jugadoresActivos = []
 #Varaibles a emplear para dibujar el tablero
 filas_tablero = 2
 columnas_tablero = 25
 #Variables de juego
 jugar = True
 jugadores = 0
+#-------------------------------------------------------------------------------------
+                     #Objetos de clases 
+#-------------------------------------------------------------------------------------
+objeto_vida = Vidas()
+objeto_logica = Logica()
 #-------------------------------------------------------------------------------------
                      #Parte donde se encuentran las funciones 
 #-------------------------------------------------------------------------------------
@@ -55,28 +64,50 @@ def tablero(posicion_jugador,filas,columnas):
         print(''.join(fila))
     print("=" * (columnas * 3)) #Linea inferior del tablero
 #-------------------------------------------------------------------------------------
+
 #Llamamos a la funcion del mensaje de inicio
 bienvenida_animada(mensaje=mensajes)
 time.sleep(0.6)
 #Preguntamos el numero de jugadores
 jugadores = int(input("\t Cuantos novatos jugaran:"))
+
+#-------------------------------------------------------------------------------------
+#llenado de elementos de la lista posicion y jugadores Activos
+for i in range(jugadores):
+    posicion_jugador.append(0)
+    jugadoresActivos.append(True)
+#-------------------------------------------------------------------------------------
+
+#generamos las fichas
+fichas = objeto_vida.cantidadfichas(jugadores)
+
+#generamos el diccionario con el estado de cada ficha para cada jugador
+fichasJugadores = objeto_vida.vidas(jugadores, fichas)
 #Definimos un while que nos ayude con el control del juego
 while jugar:
     for jugador in range(jugadores):
-        input(f"\nEs turno del jugador {jugador + 1}. Presione Enter para lanzar los dados")
-        #llamamos a la funcion lanzar_dado y obtenemos el resultado del lanzamiento
-        dado1, dado2 = lanzar_dados()
-        #Verificamos si se obtuvo un par de numeros iguales
-        if dado1 == dado2:
-            print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
-            print(Fore.YELLOW+"Adelante futura leyenda \n"+ Fore.RESET)
-            posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1)
-            #Llamamos a las funcion de dibujar tablero
-            time.sleep(0.6)
-            tablero(posicion_jugador,filas=filas_tablero, columnas=columnas_tablero)
+        if jugadoresActivos[jugador]:#para determinar si el jugador aun tiene fichas con vidas
+            input(f"\nEs turno del jugador {jugador + 1}. Presione Enter para lanzar los dados")
+            #llamamos a la funcion lanzar_dado y obtenemos el resultado del lanzamiento
+            dado1, dado2 = lanzar_dados()
+            #Verificamos si se obtuvo un par de numeros iguales
+            if dado1 == dado2:
+                print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
+                print(Fore.YELLOW+"Adelante futura leyenda \n"+ Fore.RESET)
+                posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1)
+                #validamos si un jugador cae en la misma casilla que otro jugador
+                for indice, elemento in enumerate(posicion_jugador):
+                    if indice != jugador and elemento == posicion_jugador[jugador]:
+                        print(f"Jugador {indice + 1} Vuelve al inicio")
+                        objeto_logica.perder_Vida(fichasJugadores,fichas,indice,jugadoresActivos)
+                        posicion_jugador[indice] = 0
+                        break
+                #Llamamos a las funcion de dibujar tablero
+                time.sleep(0.6)
+                tablero(posicion_jugador,filas=filas_tablero, columnas=columnas_tablero)
 
-        else:
-            print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
-            print(Fore.LIGHTMAGENTA_EX+"¡Hoy no es tu día de suerte!"+ Fore.RESET)   
+            else:
+                print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
+                print(Fore.LIGHTMAGENTA_EX+"¡Hoy no es tu día de suerte!"+ Fore.RESET)   
 
         
