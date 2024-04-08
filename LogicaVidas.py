@@ -15,8 +15,10 @@ class Logica:
                     fichas_jugador_next[jugador] = False
                     fichasJugadores[f"ficha{next_index}"] = fichas_jugador_next
                     if not fichas_jugador_i[jugador] and not fichas_jugador_next[jugador]:
-                        print(f"El Jugador {jugador + 1} ha perdido las vidas de una ficha")
-                    if all(not fichasJugadores[f"ficha{j+1}"][jugador] for j in range(cantidadFichas)):
+                       # print(f"El Jugador {jugador + 1} ha perdido las vidas de una ficha")
                         print(f"El jugador {jugador + 1} No tiene mas Fichas")
                         listaJugadores[jugador] = False
+                    ''' if all(not fichasJugadores[f"ficha{j+1}"][jugador] for j in range(cantidadFichas)):
+                        print(f"El jugador {jugador + 1} No tiene mas Fichas")
+                        listaJugadores[jugador] = False'''
                     break
