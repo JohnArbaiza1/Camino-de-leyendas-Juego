@@ -46,12 +46,8 @@ def bienvenida_animada(mensaje):
 #Funcion encargada del lanzamiento de los dados.
 def lanzar_dados():
     #Definimos las variables que almacenara el valor del lazamiento de los dados
-    # dado1 = random.randint(1,6)
-    # dado2 = random.randint(1,6)
-
-    # para comprobar que funcione los tiros dobles
-    dado1 = 1
-    dado2 = 1
+    dado1 = random.randint(1,6)
+    dado2 = random.randint(1,6)
     return dado1, dado2
 
 #Funcion encargada de dibujar el tablero de juego
@@ -78,7 +74,7 @@ time.sleep(0.6)
 jugadores = validar()
 
 # casillas de ejemplo
-casillas_tiro_doble = [1, 2, 3, 4, 6, 7, 8]
+casillas_tiro_doble = [20,35,44]
 
 #-------------------------------------------------------------------------------------
 #llenado de elementos de la lista posicion y jugadores Activos
@@ -107,10 +103,10 @@ while jugar:
 
                 tiro_doble_consecutivo = 0
                 while posicion_jugador[jugador] in casillas_tiro_doble:
-                    print(f"Tienes tiro doble. Cantidad: {tiro_doble_consecutivo + 1}")
-                    input(f"Es turno del jugador {jugador + 1}. Presione Enter para lanzar los dados")
                     dado1, dado2 = lanzar_dados()
                     if dado1 == dado2:
+                        print(f"Tienes tiro doble. Cantidad: {tiro_doble_consecutivo + 1}")
+                        input(f"Es turno del jugador {jugador + 1}. Presione Enter para lanzar los dados")
                         print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
                         print(Fore.YELLOW+"Adelante futura leyenda \n"+ Fore.RESET)
                         posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1)
@@ -119,16 +115,18 @@ while jugar:
                             print(f"Jugador {jugador + 1} Vuelve al inicio")
                             posicion_jugador[jugador] = 0
                             tiro_doble_consecutivo = 0
-                    else:
-                        tiro_doble_consecutivo = 0
 
                 print(f"Posicion actual del jugador {jugador + 1}: {posicion_jugador[jugador]}")
                 #validamos si un jugador cae en la misma casilla que otro jugador
                 for indice, elemento in enumerate(posicion_jugador):
                     if indice != jugador and elemento == posicion_jugador[jugador]:
-                        print(f"Jugador {indice + 1} Vuelve al inicio")
+                        print(f"Jugador {jugador + 1} avanza 10 casillas adicionales.")
+                        posicion_jugador[jugador] += 10
+                        print(f"Jugador {indice + 1} retrocedes 3 casillas")
                         objeto_logica.perder_Vida(fichasJugadores,fichas,indice,jugadoresActivos)
-                        posicion_jugador[indice] = 0
+                        posicion_jugador[indice] -= 3
+                        if posicion_jugador[indice] < 0:
+                            posicion_jugador[indice] = 0
                         break
                 #Llamamos a las funcion de dibujar tablero
                 time.sleep(0.6)
