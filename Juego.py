@@ -1,4 +1,5 @@
 #Importamos los modulos a emplear
+import pprint
 import time #Para hacer unas pequeñas animaciones
 import random
 from colorama import init, Fore #Para poder dar color a los mensajes en consola
@@ -8,6 +9,7 @@ from Mover_ficha import *
 from Vidas import Vidas
 from LogicaVidas import Logica
 from validacion_dato import validar
+
 #-------------------------------------------------------------------------------------
 #Definimos una lista que contenga el mensaje a mostrar
 mensajes = ["    BIENVENIDO","        AL ","CAMINO DE LEYENDAS"]
@@ -21,14 +23,17 @@ columnas_tablero = 25
 #Variables de juego
 jugar = True
 jugadores = 0
+
 #-------------------------------------------------------------------------------------
                      #Objetos de clases 
 #-------------------------------------------------------------------------------------
 objeto_vida = Vidas()
 objeto_logica = Logica()
+
 #-------------------------------------------------------------------------------------
                      #Parte donde se encuentran las funciones 
 #-------------------------------------------------------------------------------------
+
 #Funcion encargada del mensaje de bienvenida
 def bienvenida_animada(mensaje):
     print("\n\t","*"*36, end="\n")
@@ -48,10 +53,11 @@ def lanzar_dados():
     #Definimos las variables que almacenara el valor del lazamiento de los dados
     dado1 = random.randint(1,6)
     dado2 = random.randint(1,6)
+
     return dado1, dado2
 
 #Funcion encargada de dibujar el tablero de juego
-def tablero(posicion_jugador,filas,columnas):
+def tablero(posicion_jugador, filas, columnas):
     #Definimos una matriz vacia que contenga nuestro tablero
     camino = [ ['[ ]'] * columnas for _ in range(filas) ] #El guion _ que vemos en el for es para indicar que no es necesario el valor de la variable de iteración en el bucle. 
     #Asignamos la posicion del jugador
@@ -70,7 +76,6 @@ def tablero(posicion_jugador,filas,columnas):
 bienvenida_animada(mensaje=mensajes)
 time.sleep(0.6)
 #Preguntamos el numero de jugadores
-# jugadores = int(input("\t Cuantos novatos jugaran:"))
 jugadores = validar()
 
 # casillas de ejemplo
@@ -88,6 +93,7 @@ fichas = objeto_vida.cantidadfichas(jugadores)
 
 #generamos el diccionario con el estado de cada ficha para cada jugador
 fichasJugadores = objeto_vida.vidas(jugadores, fichas)
+
 #Definimos un while que nos ayude con el control del juego
 while jugar:
     for jugador in range(jugadores):
@@ -99,7 +105,7 @@ while jugar:
             if dado1 == dado2:
                 print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
                 print(Fore.YELLOW+"Adelante futura leyenda \n"+ Fore.RESET)
-                posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1)
+                posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1,fichasJugadores,fichas,jugador,jugadoresActivos)
 
                 tiro_doble_consecutivo = 0
                 while posicion_jugador[jugador] in casillas_tiro_doble:
@@ -109,7 +115,7 @@ while jugar:
                         input(f"Es turno del jugador {jugador + 1}. Presione Enter para lanzar los dados")
                         print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
                         print(Fore.YELLOW+"Adelante futura leyenda \n"+ Fore.RESET)
-                        posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1)
+                        posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1,fichasJugadores,fichas,jugador,jugadoresActivos)
                         tiro_doble_consecutivo += 1
                         if tiro_doble_consecutivo == 3:
                             print(f"Jugador {jugador + 1} Vuelve al inicio")
@@ -120,20 +126,25 @@ while jugar:
                 #validamos si un jugador cae en la misma casilla que otro jugador
                 for indice, elemento in enumerate(posicion_jugador):
                     if indice != jugador and elemento == posicion_jugador[jugador]:
-                        print(f"Jugador {jugador + 1} avanza 10 casillas adicionales.")
-                        posicion_jugador[jugador] += 10
-                        print(f"Jugador {indice + 1} retrocedes 3 casillas")
-                        objeto_logica.perder_Vida(fichasJugadores,fichas,indice,jugadoresActivos)
-                        posicion_jugador[indice] -= 3
-                        if posicion_jugador[indice] < 0:
-                            posicion_jugador[indice] = 0
-                        break
+                        if posicion_jugador[jugador] != 0:
+                            posicion_jugador[jugador] += 10
+                            if posicion_jugador[jugador] > 49:
+                                print(f"Jugador {jugador + 1} Permanece en la misma casilla.")
+                                posicion_jugador[jugador] -= 10
+                            else:
+                                print(f"Jugador {jugador + 1} avanza 10 casillas adicionales.")
+                            if posicion_jugador[indice] in tunel_Seguridad:
+                                print(f"Jugador {indice + 1} Estas a Salvo")
+                            else:
+                                print(f"Jugador {indice + 1} retrocedes 3 casillas")
+                                #objeto_logica.perder_Vida(fichasJugadores,fichas,indice,jugadoresActivos)
+                                posicion_jugador[indice] -= 3
+                            if posicion_jugador[indice] < 0:
+                                posicion_jugador[indice] = 0
+                            break
                 #Llamamos a las funcion de dibujar tablero
                 time.sleep(0.6)
                 tablero(posicion_jugador,filas=filas_tablero, columnas=columnas_tablero)
-
             else:
                 print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
-                print(Fore.LIGHTMAGENTA_EX+"¡Hoy no es tu día de suerte!"+ Fore.RESET)   
-
-        
+                print(Fore.LIGHTMAGENTA_EX+"¡Hoy no es tu día de suerte!"+ Fore.RESET)        
