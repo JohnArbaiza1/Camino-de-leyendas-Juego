@@ -19,7 +19,10 @@ def mover_fichas(posicion_jugador,paso1,fichas,cantidadFichas, jugador,listaJuga
         posicion_jugador -= 2
     elif posicion_jugador in tunel_Seguridad:
         if posicion_jugador == 49: 
+            print(Fore.LIGHTGREEN_EX +"\n","-"*70)
+            print(f"       FELICIDADES JUGADOR {jugador+1} LO HAS LOGRADO")
             print(Fore.LIGHTGREEN_EX +"-"*70,"\nHas ganado el juego: Ahora eres una leyenda (⌐■_■)\n","-"*70 + Fore.RESET)
+            exit()
         else:
             print(Fore.LIGHTGREEN_EX +"-"*70, "\nHas llegado al bosque sagrado: Estás en túnel de seguridad ヾ(⌐■_■)ノ♪\n","-"*70 + Fore.RESET)
     elif posicion_jugador >= 50:
@@ -34,17 +37,6 @@ def mover_fichas(posicion_jugador,paso1,fichas,cantidadFichas, jugador,listaJuga
                 fichas[f"ficha{i+1}"] = fichas_jugador_i
                 print("\nHas perdido una ficha (ㆆ_ㆆ)")
                 break
-            
-            next_index = i + 1
-            if next_index < cantidadFichas:
-                fichas_jugador_next = fichas[f"ficha{next_index}"][:]
-                if fichas_jugador_next[jugador]:
-                    fichas_jugador_next[jugador] = False
-                    fichas[f"ficha{next_index}"] = fichas_jugador_next
-                    if not fichas_jugador_i[jugador] and not fichas_jugador_next[jugador]:
-                        print(f"El jugador {jugador + 1} No tiene mas Fichas ಥ_ಥ")
-                        #listaJugadores[jugador] = False
-                    break
 
         for j in range(cantidadFichas):
             if fichas[f"ficha{j+1}"][jugador]:
@@ -62,7 +54,6 @@ def mover_fichas(posicion_jugador,paso1,fichas,cantidadFichas, jugador,listaJuga
             list_novatos.append(i+1) 
         #Transformamos las listas de nuestro jugadores a un diccionario
         dic_jugadores = dict(zip(list_novatos,listaJugadores))
-        print(dic_jugadores)
         
         #Verificamos que solo quede un jugador con fichaz
         jugadores_activos = sum(1 for estado in dic_jugadores.values() if estado)

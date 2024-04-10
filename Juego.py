@@ -1,5 +1,4 @@
 #Importamos los modulos a emplear
-import pprint
 import time #Para hacer unas pequeñas animaciones
 import random
 from colorama import init, Fore #Para poder dar color a los mensajes en consola
@@ -7,7 +6,6 @@ init()
 #Llamamos a las demas clases
 from Mover_ficha import *
 from Vidas import Vidas
-from LogicaVidas import Logica
 from validacion_dato import validar
 
 #-------------------------------------------------------------------------------------
@@ -28,7 +26,6 @@ jugadores = 0
                      #Objetos de clases 
 #-------------------------------------------------------------------------------------
 objeto_vida = Vidas()
-objeto_logica = Logica()
 
 #-------------------------------------------------------------------------------------
                      #Parte donde se encuentran las funciones 
@@ -53,7 +50,7 @@ def lanzar_dados():
     #Definimos las variables que almacenara el valor del lazamiento de los dados
     dado1 = random.randint(1,6)
     dado2 = random.randint(1,6)
-    # dado1, dado2 = 44,44
+
     return dado1, dado2
 
 #Funcion encargada de dibujar el tablero de juego
@@ -65,7 +62,7 @@ def tablero(posicion_jugador, filas, columnas):
         #convierte la posición del jugador en coordenadas de fila y columna en la matriz
         fila, columna = divmod(posicion, columnas)
         #actualiza la matriz camino para reflejar la posición de cada jugador en el tablero
-        camino[fila][columna] = f"[{i + 1}]"
+        camino[fila][columna] = (Fore.YELLOW + f"[{i + 1}]" + Fore.RESET)
     print("=" * (columnas * 3)) #Fila superior del tablero
     for fila in camino:
         print(''.join(fila))
@@ -125,8 +122,8 @@ while jugar:
                 print(f"Posicion actual del jugador {jugador + 1}: {posicion_jugador[jugador]}")
                 #validamos si un jugador cae en la misma casilla que otro jugador
                 for indice, elemento in enumerate(posicion_jugador):
-                    if indice != jugador and elemento == posicion_jugador[jugador]:
-                        if posicion_jugador[jugador] != 0:
+                    if indice != jugador and elemento == posicion_jugador[jugador] and not(elemento in casillas_seguras):
+                        if posicion_jugador[jugador] != 0 :
                             posicion_jugador[jugador] += 10
                             if posicion_jugador[jugador] > 49:
                                 print(f"Jugador {jugador + 1} Permanece en la misma casilla.")
@@ -137,7 +134,6 @@ while jugar:
                                 print(f"Jugador {indice + 1} Estas a Salvo")
                             else:
                                 print(f"Jugador {indice + 1} retrocedes 3 casillas")
-                                #objeto_logica.perder_Vida(fichasJugadores,fichas,indice,jugadoresActivos)
                                 posicion_jugador[indice] -= 3
                             if posicion_jugador[indice] < 0:
                                 posicion_jugador[indice] = 0
