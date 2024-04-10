@@ -53,7 +53,7 @@ def lanzar_dados():
     #Definimos las variables que almacenara el valor del lazamiento de los dados
     dado1 = random.randint(1,6)
     dado2 = random.randint(1,6)
-
+    # dado1, dado2 = 44,44
     return dado1, dado2
 
 #Funcion encargada de dibujar el tablero de juego
@@ -105,7 +105,7 @@ while jugar:
             if dado1 == dado2:
                 print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
                 print(Fore.YELLOW+"Adelante futura leyenda \n"+ Fore.RESET)
-                posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1,fichasJugadores,fichas,jugador,jugadoresActivos)
+                posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1,fichasJugadores,fichas,jugador,jugadoresActivos,jugadores)
 
                 tiro_doble_consecutivo = 0
                 while posicion_jugador[jugador] in casillas_tiro_doble:
@@ -115,7 +115,7 @@ while jugar:
                         input(f"Es turno del jugador {jugador + 1}. Presione Enter para lanzar los dados")
                         print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
                         print(Fore.YELLOW+"Adelante futura leyenda \n"+ Fore.RESET)
-                        posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1,fichasJugadores,fichas,jugador,jugadoresActivos)
+                        posicion_jugador[jugador] = mover_fichas(posicion_jugador[jugador],dado1,fichasJugadores,fichas,jugador,jugadoresActivos,jugadores)
                         tiro_doble_consecutivo += 1
                         if tiro_doble_consecutivo == 3:
                             print(f"Jugador {jugador + 1} Vuelve al inicio")
@@ -148,3 +148,4 @@ while jugar:
             else:
                 print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
                 print(Fore.LIGHTMAGENTA_EX+"¡Hoy no es tu día de suerte!"+ Fore.RESET)        
+
