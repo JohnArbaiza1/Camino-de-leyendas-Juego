@@ -8,8 +8,11 @@ jugadores que se adentren en el camino de las leyendas.
 
 ![2024-04-10 21_00_27-Window](https://github.com/JohnArbaiza1/Camino-de-leyendas-Juego/assets/94189760/9d269a07-9e56-4f5e-8f2c-e4c58da1e6c8)
 
-* El juego tiene una capacidad mínima de 2 jugadores y máxima de 4.
-* Cada jugador contara con un determinado número de fichas.
+### Acerca del juego 🎮💻
+* El juego tiene una capacidad mínima de 2 jugadores 😎 y máxima de 4. 🤯
+* Cada jugador contara con un determinado número de fichas. 🔴
+* Cada aspirante a leyenda contara con un par de 🎲
+* Los jugadores empiezan a jugar solo si en el lanzamiento de su par de dados obtiene un par de números iguales 😑
 * El juego contara con:
   * Casillas seguras.
   * Casillas de penalización. 
@@ -40,4 +43,4 @@ pip install colorama
 ## Autores ✒️
 * John Elvis Arbaiza Velásquez  <a href="https://github.com/JohnArbaiza1" >JohnArbaiza1 </a>
 * Erick Adony López Meléndez <a href="https://github.com/lm21009UES" > lm21009UES </a>
-* Luis Emilio González Molina <a href="https://github.com/lm21009UES" >gnz-e </a>                     
+* Luis Emilio González Molina <a href="https://github.com/gnz-e" >gnz-e </a>                     
