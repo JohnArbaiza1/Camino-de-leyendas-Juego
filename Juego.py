@@ -11,6 +11,9 @@ from validacion_dato import validar
 #-------------------------------------------------------------------------------------
 #Definimos una lista que contenga el mensaje a mostrar
 mensajes = ["    BIENVENIDO","        AL ","CAMINO DE LEYENDAS"]
+#Variables para colores de mensaje
+red = Fore.RED+"^"+Fore.RESET
+amarillo = Fore.YELLOW + "*" + Fore.RESET
 #Definimos una lista vacia que almacene las posiciones de los jugadores
 posicion_jugador = []
 #lista para controlar los jugadores que siguen en juego
@@ -21,7 +24,6 @@ columnas_tablero = 25
 #Variables de juego
 jugar = True
 jugadores = 0
-
 #-------------------------------------------------------------------------------------
                      #Objetos de clases 
 #-------------------------------------------------------------------------------------
@@ -33,17 +35,33 @@ objeto_vida = Vidas()
 
 #Funcion encargada del mensaje de bienvenida
 def bienvenida_animada(mensaje):
-    print("\n\t","*"*36, end="\n")
+    print("*"*64, end="\n")
     time.sleep(0.9) #El mensaje se muestra despues de 0.9 seg
     #Empleamos un for que recorra la lista
-    for palabras in mensajes:
+    for palabras in mensaje:
         #Imprimimos el mensaje
-        print(Fore.YELLOW+"\t\t",palabras, end='' + Fore.RESET , flush=True )
+        print(Fore.YELLOW+" "*22,palabras, end='' + Fore.RESET , flush=True )
         #Mostramos el mensaje con un tiempo de espera de 0.6 seg entre cada palabra.
         time.sleep(0.6)
         print()
+        
+    print()
+    print(Fore.CYAN+" "*30,red)
+    time.sleep(0.5)
+    print(" "*29,f"{red}{amarillo}{red}")
+    time.sleep(0.5)
+    print(" "*29,f"{red}{amarillo}{red}\n"," "*28,f"{red}{amarillo}{red}\n"," "*28,f"{red}{amarillo}{red}\n"," "*25,f"\033[91m{'<<<<'}\033[0m{amarillo}\033[91m{'>>>>'}\033[0m")
+    time.sleep(0.5)
+    print(" "*30,f"{amarillo}\n"," "*29,f"{amarillo}\n"," "*29,f"\033[91m{'V'}\033[0m")
+
     time.sleep(0.6)
-    print("\t","*"*36, end="\n")
+    print("*"*64, end="\n")
+    time.sleep(0.8)
+    print(Fore.YELLOW + "El juego consiste en atravesar un camino lleno de peligros ")
+    print("y recompensas donde el primer jugador que lleve una de N fichas")
+    print("sagradas gana el derecho de ser una leyenda y te animas a jugar."+Fore.RESET)
+    print("*"*64, end="\n")
+    time.sleep(1)
 
 #Funcion encargada del lanzamiento de los dados.
 def lanzar_dados():
@@ -84,7 +102,6 @@ for i in range(jugadores):
     posicion_jugador.append(0)
     jugadoresActivos.append(True)
 #-------------------------------------------------------------------------------------
-
 #generamos las fichas
 fichas = objeto_vida.cantidadfichas(jugadores)
 
@@ -144,4 +161,3 @@ while jugar:
             else:
                 print(f"\nEl jugador {jugador + 1}, Lanzo: ({dado1},{dado2})")
                 print(Fore.LIGHTMAGENTA_EX+"¡Hoy no es tu día de suerte!"+ Fore.RESET)        
-

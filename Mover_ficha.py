@@ -15,7 +15,7 @@ def mover_fichas(posicion_jugador,paso1,fichas,cantidadFichas, jugador,listaJuga
     if posicion_jugador in casillas_seguras:
         print(Fore.LIGHTGREEN_EX +"-"*60,"\nCaíste en tierra protegida: Tienes mucha suerte.(▀̿Ĺ̯▀̿ ̿) \n","-"*60 + Fore.RESET)
     elif posicion_jugador in casillas_penalizacion:
-        print(Fore.LIGHTMAGENTA_EX +"-"*70, "\nUn mago usa un hechizo contra ti: ahora retrocedes dos casillas (⊙_⊙;) \n","-"*70 + Fore.RESET)
+        print(Fore.LIGHTMAGENTA_EX +"-"*70, "\nUn mago usa un hechizo contra ti: ahora retrocedes dos casillas (⊙ _ ⊙ ;) \n","-"*70 + Fore.RESET)
         posicion_jugador -= 2
     elif posicion_jugador in tunel_Seguridad:
         if posicion_jugador == 49: 
