@@ -21,6 +21,21 @@ jugadores que se adentren en el camino de las leyendas.
 * Penalización si un jugador alcanza la misma casilla que otro.
 * Penalización en caso de que sobrepase la meta y caiga al abismo de las serpientes.
 
+## Como jugar <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Thinking%20Face.png" alt="Thinking Face" width="30" height="30" />
+* Ejecutamos el archivo juego.py del proyecto camino de leyendas y en la consola nos aparece la bienvenida con un pequeño mensaje de introducción al juego.
+* Seguidamente se nos realiza la pregunta cuantos novatos jugaran.
+* Ingresamos el número de jugadores que no puede ser menor a 2 ni mayor a 4 y damos enter.
+* Inicia el juego con el lanzamiento de los dados por parte del jugador 1.
+* En caso de que no se cumpla la condición impuesta para que el jugador pueda avanzar se mostrara el siguiente mensaje con el número de los dados que obtuvo en su lanzamiento.
+  
+  ![2024-04-15 19_31_06-Juego py - Camino-de-leyendas-Juego - Visual Studio Code](https://github.com/JohnArbaiza1/Camino-de-leyendas-Juego/assets/94189760/6314a457-6ffc-49ed-9451-493c198a33ed)
+
+* En caso de que el jugador obtenga un par de números iguales (Condición impuesta para avanzar) se mostrará el siguiente mensaje, así como el tablero de juego con la posición en la que se encuentran cada uno de los novatos que estén jugando.
+
+  ![2024-04-15 19_34_57-Juego py - Camino-de-leyendas-Juego - Visual Studio Code](https://github.com/JohnArbaiza1/Camino-de-leyendas-Juego/assets/94189760/1ecd0516-1326-4caf-b7a1-a14a85cd468b)
+
+* Damos enter para seguir lanzando los dados y avanzar a través de este tablero lleno de recompensas y castigos 
+
 ## Requisitos 📋
 Para poder ejecutar el proyecto sin ningún problema es necesario instalar el archivo de requirements que ya se añade con el proyecto para hacerlo debemos hacer lo siguiente:
 
